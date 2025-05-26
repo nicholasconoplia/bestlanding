@@ -132,7 +132,7 @@ window.addEventListener('load', () => {
     }, 100);
 });
 
-// Smooth scrolling for navigation links
+// Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -144,6 +144,39 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             });
         }
     });
+});
+
+// Force autoplay on page load
+window.addEventListener('load', function() {
+    // Try multiple approaches
+    function tryAutoplay() {
+        // Try audio element
+        var audio = document.getElementById('bgAudio');
+        if (audio) {
+            audio.play().catch(function(error) {
+                console.log("Audio autoplay failed, trying YouTube fallback");
+            });
+        }
+
+        // Try YouTube
+        var iframe = document.getElementById('bgMusic');
+        if (iframe && iframe.contentWindow) {
+            iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        }
+    }
+
+    // Try immediately
+    tryAutoplay();
+
+    // Also try on first user interaction
+    document.body.addEventListener('click', function() {
+        tryAutoplay();
+    }, { once: true });
+
+    // And on scroll
+    window.addEventListener('scroll', function() {
+        tryAutoplay();
+    }, { once: true });
 });
 
 // Hero section animations

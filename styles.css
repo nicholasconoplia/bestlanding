@@ -89,6 +89,44 @@ body {
     opacity: 0.7;
 }
 
+/* Nostalgic Background Images */
+.nostalgic-backgrounds {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 8s ease-in-out;
+    animation: fadeInOut 48s infinite;
+    mix-blend-mode: overlay;
+}
+
+.bg-image:nth-child(1) { animation-delay: 0s; }
+.bg-image:nth-child(2) { animation-delay: 8s; }
+.bg-image:nth-child(3) { animation-delay: 16s; }
+.bg-image:nth-child(4) { animation-delay: 24s; }
+.bg-image:nth-child(5) { animation-delay: 32s; }
+.bg-image:nth-child(6) { animation-delay: 40s; }
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    4%, 12% { opacity: 0.1; }
+    16% { opacity: 0; }
+}
+
 @keyframes filmGrainFloat {
     0%, 100% { 
         transform: translateY(0px) rotate(0deg); 
@@ -305,6 +343,42 @@ body {
     transform: translateX(5px);
 }
 
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0.8;
+    transition: opacity 0.4s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.scroll-indicator:hover {
+    opacity: 1;
+}
+
+.scroll-arrow {
+    width: 16px;
+    height: 16px;
+    border-right: 2px solid var(--text-offwhite);
+    border-bottom: 2px solid var(--text-offwhite);
+    transform: rotate(45deg);
+    animation: arrowFade 2s ease-in-out infinite;
+    box-shadow: 
+        2px 2px 8px rgba(255, 212, 120, 0.2),
+        4px 4px 16px rgba(255, 212, 120, 0.1);
+}
+
+@keyframes arrowFade {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .nav {
@@ -320,6 +394,15 @@ body {
     
     .nav-links {
         gap: 20px;
+    }
+
+    .scroll-indicator {
+        bottom: 30px;
+    }
+
+    .scroll-arrow {
+        width: 14px;
+        height: 14px;
     }
 }
 
