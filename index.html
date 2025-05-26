@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvo - Close Your Laptop. Open Your Life.</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="Elysium Ethereal Fantasy Ambient Music.wav" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Play Button -->
+    <button id="audioControl" class="audio-control" aria-label="Toggle Music">
+        <svg class="audio-icon-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 3l14 9-14 9V3z"/>
+        </svg>
+        <svg class="audio-icon-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+            <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>
+        </svg>
+    </button>
+
+    <!-- Page Load Fade-in Overlay -->
+    <div class="fade-in-overlay"></div>
+
+    <!-- Film Grain Overlay -->
+    <div class="film-grain"></div>
+    
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-logo">canvo</div>
+        <div class="nav-links">
+            <a href="#section1">How It Works</a>
+            <a href="#section2">Features</a>
+            <a href="#section3">Stories</a>
+            <a href="#section5">FAQ</a>
+            <a href="/token.html" target="_blank">Access Token</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="cinematic-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-text-container">
+            <h1 class="hero-title">canvo</h1>
+            <p class="hero-subtitle">Get everything done. So you can live your real life.</p>
+                <a href="https://apps.apple.com/au/app/canvo/id6745335226" class="hero-cta">
+                    <span class="hero-cta-text">Download Now</span>
+                    <svg class="hero-cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="section1" class="section">
+        <div class="section-content">
+            <div class="section-header">
+                <span class="section-tag">How It Works</span>
+                <h2 class="section-title">The Productivity Tool You Always Wish You Had</h2>
+                <p class="section-subtitle">Canvo is built by students, for students</p>
+            </div>
+            <div class="video-container">
+                <div class="video-placeholder">
+                    <span>Video Coming Soon</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="section2" class="section">
+        <div class="section-content features-grid">
+            <!-- Row 1: Text Left, Image Right -->
+            <div class="feature-row">
+                <div class="feature-text">
+                    <h3>Everything You Owe — In One Place</h3>
+                    <p>See all your upcoming tasks organized by priority, due date, and class — with headers and countdowns so you always know what's next.</p>
+                    <p>Get daily reminders for anything due this week — no more surprises. And forget manual entry: every assignment from Canvas due in the next 7 days is automatically added when you open the app.</p>
+                </div>
+                <div class="feature-image">
+                    <img src="TasksTab.png" alt="Tasks Overview" class="feature-screenshot">
+                </div>
+            </div>
+            
+            <!-- Row 2: Image Left, Text Right -->
+            <div class="feature-row">
+                <div class="feature-image">
+                    <img src="canvasintegration.png" alt="Canvas Integration" class="feature-screenshot">
+                </div>
+                <div class="feature-text">
+                    <h3>Your Whole Canvas, Simplified</h3>
+                    <p>Instantly view all your assignments and quizzes from Canvas in one clean layout. See due dates, submission status, and tap "View in Canvas" to jump straight to the source.</p>
+                    <p>No more endless scrolling through modules, inboxes, or links. Just what you need — right when you need it.</p>
+                </div>
+            </div>
+            
+            <!-- Row 3: Text Left, Image Right -->
+            <div class="feature-row">
+                <div class="feature-text">
+                    <h3>When You Don't Know Where to Start</h3>
+                    <p>Tap "Spin the Wheel" and let Canvo choose your next move. Whether it's a 5-minute quiz or that big essay, this playful nudge helps you beat procrastination with one tap.</p>
+                </div>
+                <div class="feature-image">
+                    <img src="spinthewheel.png" alt="Spin the Wheel" class="feature-screenshot">
+                </div>
+            </div>
+
+            <!-- Row 4: Image Left, Text Right -->
+            <div class="feature-row">
+                <div class="feature-image">
+                    <img src="timetable.png" alt="Timetable View" class="feature-screenshot">
+                </div>
+                <div class="feature-text">
+                    <h3>Your Schedule. Without the Stress</h3>
+                    <p>Add your deadlines. Block your busy hours. Canvo auto-builds a custom study plan into your free time — with smart notifications when it's time to get to work.</p>
+                    <p>Finish before the deadline. Get your life back sooner.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="section3" class="section">
+        <div class="section-content">
+            <div class="section-header">
+                <span class="section-tag">Testimonials</span>
+                <h2 class="section-title">What Our Users are Saying</h2>
+            </div>
+            <div class="testimonials-container">
+                <div class="testimonials-track">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"I used to get flooded with Canvas deadlines at once and miss half of them. Now I open Canvo and all my tasks are just there. It reminds me every day until I do it — I haven't missed a thing since."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <h4>Jess T.</h4>
+                            <span>Student</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"I'd write to-do lists, then forget I even wrote them. Canvo's auto-sync with Canvas and daily nudges are the only reason I know what I'm supposed to be doing each day."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <h4>Rajiv K.</h4>
+                            <span>Student</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"I was constantly stressed because I never knew when I'd actually have time to study. The timetable feature literally builds my week around my schedule — I just follow it."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <h4>Mikayla D.</h4>
+                            <span>Student</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"Procrastination would eat my whole day. I'd stare at my task list for hours. Now I just spin the wheel and start. It removes the decision paralysis completely."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <h4>Zoe A.</h4>
+                            <span>Student</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"I had notes in one app, tasks in another, deadlines in Canvas… it was chaos. Canvo brings it all into one place. I can finally breathe and just focus on doing, not finding."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <h4>Dan M.</h4>
+                            <span>Student</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"I'd always study too late and burn out. Canvo helps me plan ahead with gentle notifications that feel like a friend tapping my shoulder — not an alarm screaming at me."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <h4>Leo G.</h4>
+                            <span>Student</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"I'd always forget about smaller assignments until the last minute. Now Canvo adds them automatically and reminds me every day until they're done. I'm finally ahead."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <h4>Amber S.</h4>
+                            <span>Student</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"Before Canvo, I felt like I was either working constantly or doing nothing out of guilt. Now I finish early and actually enjoy my nights out. That balance changed everything."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <h4>Chris N.</h4>
+                            <span>Student</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"I used to scroll endlessly because I didn't know where to start. The wheel snapped me out of that. It's playful, but it's also the only reason I've touched some of my hardest tasks."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <h4>Eden J.</h4>
+                            <span>Student</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"I have ADHD. Most apps feel like more clutter. Canvo keeps it visual, simple, and smart. It shows me just what I need to do, and when. It's like my second brain."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <h4>Noah R.</h4>
+                            <span>Student</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download CTA Section -->
+    <section id="section4" class="section">
+        <div class="section-content cta-container">
+            <div class="cta-content">
+                <span class="section-tag">Download Now</span>
+                <h2 class="section-title">Transform Your Life Today</h2>
+                <p class="cta-description">Get started with Canvo and experience a new way of living. Available now on iOS.</p>
+                <div class="cta-buttons">
+                    <a href="https://apps.apple.com/au/app/canvo/id6745335226" class="app-store-button">
+                        <span class="button-content">
+                            <span class="download-text">Download on the</span>
+                            <span class="store-text">App Store</span>
+                        </span>
+                        <svg class="apple-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.5 6.5C16.3 6.5 15.3 7.1 14.4 7.4C13.8 7.6 13.4 7.5 12.8 7.3C12.1 7.1 11.3 6.5 10.1 6.5C8.5 6.5 6.8 7.7 5.8 9.6C4.4 12.3 4.9 17.3 7.4 21.1C8.3 22.3 9.4 23.7 10.9 23.7C12.2 23.7 12.7 22.8 14.3 22.8C15.9 22.8 16.3 23.7 17.7 23.7C19.2 23.7 20.3 22.1 21.2 20.9C21.9 20 22.1 19.6 22.7 18.5C18.3 16.8 17.7 10.2 22.7 9C21.4 7.1 19.2 6.5 17.5 6.5ZM17.1 0C15.3 0.2 13.8 1.3 13.1 2.7C12.4 3.9 12.1 5.3 12.3 6.4C13.9 6.5 15.5 5.4 16.2 4C16.9 2.8 17.3 1.4 17.1 0Z" fill="currentColor"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="section5" class="section">
+        <div class="section-content">
+            <div class="section-header">
+                <span class="section-tag">FAQ</span>
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How do I connect Canvo to Canvas?</span>
+                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 4L12 20M4 12L20 12" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Follow these steps:</p>
+                        <ol>
+                            <li>Log into Canvas</li>
+                            <li>Go to Account > Settings</li>
+                            <li>Scroll to Approved Integrations</li>
+                            <li>Click + New Access Token</li>
+                            <li>Name it "Canvo" and generate the token</li>
+                            <li>Copy the token immediately (you won't be able to see it again)</li>
+                            <li>Open Canvo and paste it into the API key field when prompted</li>
+                        </ol>
+                        <p>Everything syncs automatically in under 60 seconds.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How do I request my Canvas access token?</span>
+                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 4L12 20M4 12L20 12" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Some universities do not allow students to generate a Canvas access token by default. Visit our support page at canvo.vercel.app/support for a detailed email template to request access from your IT department or Canvas administrator.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What are Canvo's privacy policies?</span>
+                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 4L12 20M4 12L20 12" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <ul>
+                            <li>Your data never leaves your device - everything is stored locally</li>
+                            <li>Your Canvas access token is stored securely and encrypted on your device only</li>
+                            <li>You can remove your access token at any time through the app settings</li>
+                            <li>All tasks, assignments, and settings are stored locally</li>
+                            <li>Course information syncs directly between your device and Canvas</li>
+                            <li>Zero analytics, zero cloud - we don't collect or track anything</li>
+                            <li>Canvas is the only service we connect to, entirely from your device</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Do I have to manually enter everything?</span>
+                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 4L12 20M4 12L20 12" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>No. Canvo pulls your tasks and due dates straight from Canvas — all automated.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What if I already use Google Calendar or Apple Calendar?</span>
+                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 4L12 20M4 12L20 12" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>You can import your Apple Calendar directly. Canvo will automatically plan your study time around your busy hours — no conflicts, no extra work. Google Calendar sync is coming soon.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What's "Spin the Wheel" mode?</span>
+                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 4L12 20M4 12L20 12" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>It's our anti-procrastination feature. Tap the wheel and Canvo picks a task to get you started when motivation is low.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Is it free?</span>
+                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 4L12 20M4 12L20 12" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes — and early access users (first 500) get it free forever. You'll be part of the founding community helping shape the app.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can I escape burnout with this?</span>
+                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 4L12 20M4 12L20 12" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>That's literally why we built it. Canvo helps you focus, finish, and free your mind for the things that matter most.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="faq-cta">
+                <p class="cta-ready">Ready to get started?</p>
+                <a href="https://apps.apple.com/au/app/canvo/id6745335226" class="app-store-button">
+                    <span class="button-content">
+                        <span class="download-text">Download on the</span>
+                        <span class="store-text">App Store</span>
+                    </span>
+                    <svg class="apple-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.5 6.5C16.3 6.5 15.3 7.1 14.4 7.4C13.8 7.6 13.4 7.5 12.8 7.3C12.1 7.1 11.3 6.5 10.1 6.5C8.5 6.5 6.8 7.7 5.8 9.6C4.4 12.3 4.9 17.3 7.4 21.1C8.3 22.3 9.4 23.7 10.9 23.7C12.2 23.7 12.7 22.8 14.3 22.8C15.9 22.8 16.3 23.7 17.7 23.7C19.2 23.7 20.3 22.1 21.2 20.9C21.9 20 22.1 19.6 22.7 18.5C18.3 16.8 17.7 10.2 22.7 9C21.4 7.1 19.2 6.5 17.5 6.5ZM17.1 0C15.3 0.2 13.8 1.3 13.1 2.7C12.4 3.9 12.1 5.3 12.3 6.4C13.9 6.5 15.5 5.4 16.2 4C16.9 2.8 17.3 1.4 17.1 0Z" fill="currentColor"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <div class="footer-logo">canvo</div>
+                    <p class="footer-description">Close your laptop. Open your life.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Product</h4>
+                        <a href="#section1" class="footer-link">How It Works</a>
+                        <a href="#section2" class="footer-link">Features</a>
+                        <a href="#section3" class="footer-link">Stories</a>
+                        <a href="#section5" class="footer-link">FAQ</a>
+                        <a href="/token.html" target="_blank" class="footer-link">Access Token</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Company</h4>
+                        <a href="#about" class="footer-link">About</a>
+                        <a href="support.html" class="footer-link">Support</a>
+                        <a href="#blog" class="footer-link">Blog</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Legal</h4>
+                        <a href="privacy.html" class="footer-link">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 Canvo. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/canvoapp/" aria-label="Instagram" target="_blank">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 

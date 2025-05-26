@@ -1,0 +1,15 @@
+{
+  "name": "wb",
+  "version": "1.0.0",
+  "description": "A stunning, immersive website for a student productivity app that captures the essence of **\"Get Things Done, Live Your Moments\"**. Built with cinematic storytelling, golden-hour aesthetics, and scroll-based animations.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "canvas-scroll-clip": "^1.3.2"
+  }
+}
