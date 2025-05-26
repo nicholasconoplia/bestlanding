@@ -130,17 +130,20 @@ body {
 }
 
 .nav-logo {
-    font-family: var(--font-logo);
-    font-size: 22px; 
-    color: var(--text-offwhite); 
-    font-weight: normal;
-    letter-spacing: 1.5px; 
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
 }
 
-.nav-logo:hover {
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+.nav-logo-img {
+    height: 40px;
+    width: auto;
+    transition: all 0.4s ease;
+    filter: brightness(1.1) drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
+}
+
+.nav-logo-img:hover {
+    filter: brightness(1.2) drop-shadow(0 0 30px rgba(255, 255, 255, 0.3));
+    transform: scale(1.05);
 }
 
 .nav-links {
@@ -311,6 +314,10 @@ body {
         -webkit-backdrop-filter: blur(22px) saturate(110%);
     }
     
+    .nav-logo-img {
+        height: 32px;
+    }
+    
     .nav-links {
         gap: 20px;
     }
@@ -473,6 +480,49 @@ body {
     margin-bottom: 1rem;
     letter-spacing: 0.02em;
     font-style: italic;
+}
+
+/* Feature List Styles */
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.feature-list li {
+    font-family: var(--font-subtitle);
+    font-size: 1.1rem;
+    color: var(--text-offwhite);
+    opacity: 0.85;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+    position: relative;
+    letter-spacing: 0.02em;
+    font-style: italic;
+}
+
+.feature-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 212, 120, 0.5);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 10px rgba(255, 212, 120, 0.3),
+        0 0 20px rgba(255, 212, 120, 0.2);
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+}
+
+.feature-list li:hover::before {
+    background: rgba(255, 212, 120, 0.8);
+    box-shadow: 
+        0 0 15px rgba(255, 212, 120, 0.4),
+        0 0 30px rgba(255, 212, 120, 0.3);
 }
 
 /* Testimonials */
@@ -1412,4 +1462,315 @@ body {
     .motivation-text::after {
         width: 40px;
     }
+}
+
+/* About Page Styles */
+.about-content {
+    font-family: var(--font-subtitle);
+    font-size: 1.2rem;
+    color: var(--text-offwhite);
+    line-height: 1.8;
+    letter-spacing: 0.02em;
+    font-style: italic;
+}
+
+.about-content p {
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+}
+
+.about-quotes {
+    margin: 2rem 0;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.about-quotes p {
+    font-size: 1.4rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-family: var(--font-serif);
+    font-style: normal;
+    opacity: 0.95;
+}
+
+.about-quotes p:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .about-content {
+        font-size: 1.1rem;
+    }
+    
+    .about-quotes {
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+    }
+    
+    .about-quotes p {
+        font-size: 1.2rem;
+    }
+}
+
+/* Welcome Overlay */
+.welcome-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0A0A0A;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: all 1s ease-in-out;
+    overflow: hidden;
+}
+
+/* Mouse following glow effect */
+.welcome-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 212, 120, 0.08) 20%,
+        rgba(255, 110, 90, 0.02) 30%,
+        transparent 50%
+    );
+    pointer-events: none;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Fade out animation for glow */
+.welcome-overlay.fade-out::before {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+/* Cinematic Grain */
+.welcome-overlay::after {
+    content: '';
+    position: fixed;
+    top: -150%;
+    left: -150%;
+    width: 400%;
+    height: 400%;
+    animation: grain 8s steps(10) infinite;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAAGFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANxM8mAAAACHRSTlMzABEiM0Qid4/KaKcAAAQESURBVDjLHJTbsuowDEMjcgFagv//7d4kTjltGQ0d27IuK+kf/4eS9AmR80YU4SUKDhI/zvATI0XGtMX9Jh4f0TIKtoS+FcFrJkaiYPGxJos1sCUYk8UZLBGxpRgzxFwVYkRRZIixGYXGlmJLEW+xwSxjwJYixVZSsFgYI1aBLUGLKTaJ+GiJeIutQiypi7dYAlvCFmGMiLeYIrYU8RGxuChE7C0WYotQsLUYbDHYEsxWxN1iEW8N8REb/4jYItoWc6YQW0RbLMQUGywWYouIj5iytViIKWIp4i7WFhsRUwQxxRoRU0SLYLEQU8RZTMQUYYt4i7XFRsQUwfmIXCDFEokQc1Z8xFpsDFtEi7TEQkwRthRbxNliTxETsUXEW2wQbQu2CLFQbBFvsUG0LW6KmIh2iyniLTaItsVbxBQhFvEWG0Tb4qYY4yPeYotoW0wRZwtbhFjUW2wQbYspIm6xRYhFvcVabBBtC1uEWNRbrMUUYVvYIsQi3mItpoizhS1CLOItVmKKOFvYIsQi3mIlpgixqLfYINricUXExVusxBQhFvUWG0Tb4nFFxMVbrMQUIRb1FhtE2+JxRYh5ixFti8cVERdvsRJThFjUW2wQbYvHFRFvsRJTRNmCLUIs4i1WYoo4W9gixCLeYi2miLOFLUIs4i3WYoo4W9gixCLeYi2miHaLLUIs6i02iLbFTTHGR7zFWkwR7RZbhFjUW2wQbYubYoyPeIu1mCLaLbYIsai32CDaFjfFGB/xFmsxRbRbbBFiUW+xQbQtbooYH/EWazFFnC1sEWIRb7EWU8TZwhYhFvEWazFFnC1sEWIRb7EWU8TZwhYhFvEWazFFiEW9xQbRtnhcEXHxFisxRYhFvcUG0bZ4XBFxMVbrMQUIRb3FBtG2eFwRcfEWKzFFiEW9xQbRtnhcEXHxFisxRYhFvcUG0bZ4XBFxMVbrMQUIRb3FBtG2eFwRcfEWKzFFiEW9xQbRtnhcEXHxFisxRbRbbBFiUW+xQbQtbooYH/EWazFFtFtsEWJRb7FBtC1uijE+4i3WYopot9gixKLeYoNoW9wUMT7iLdZiimi32CLEot5ig2hb3BRjfMRbrMUU0W6xRYhFvcUG0ba4Kcb4iLdYiynibGGLEIt4i7WYIs4WtgixiLdYiynibGGLEIt4i7WYIs4WtgixiLdYiyniHt5iRGwR9xYbRNvCFiEW8RYrMUXcw1uMiC3i3mKDaFvYIu4tRsQWcW+xQbQt2CKuiHt4ixGxRdxbbBBtC1vEvcWI2CLuLTaItoUtQiziLUbEFnFvsUG0LWwRYhFvMSK2iHuLDaJtYYsQi3iLEbFF3FtsEG0LW4RYxFuMiC3i3mKDaFvYIsQi3mJEbBH3FhtE28IWIRbxFiNgi7i02iLaFLeLe4n8B/wFAPid17T4e5QAAAABJRU5ErkJggg==");
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+.welcome-content {
+    text-align: center;
+    padding: 2rem;
+    max-width: 800px;
+    position: relative;
+    z-index: 2;
+    background: transparent;
+}
+
+.welcome-content h1 {
+    font-family: var(--font-subtitle);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 3rem;
+    line-height: 1.4;
+    font-style: italic;
+    letter-spacing: 0.02em;
+    text-shadow: 
+        0 0 30px rgba(255, 255, 255, 0.3),
+        0 0 60px rgba(255, 212, 120, 0.2);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease forwards 0.5s;
+}
+
+.welcome-button {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    color: rgba(255, 255, 255, 0.95);
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease forwards 1s;
+}
+
+.welcome-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 255, 255, 0.15) 0%,
+        transparent 50%
+    );
+    transform: translate(-100%, -100%) rotate(0deg);
+    animation: buttonGlow 3s ease-in-out infinite;
+}
+
+.welcome-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.welcome-button:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 
+        0 0 30px rgba(255, 255, 255, 0.15),
+        0 0 60px rgba(255, 212, 120, 0.1);
+}
+
+.welcome-button:hover::after {
+    transform: translateX(100%);
+}
+
+.welcome-button svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+}
+
+.welcome-button:hover svg {
+    transform: translateX(3px);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes buttonGlow {
+    0%, 100% {
+        transform: translate(-100%, -100%) rotate(0deg);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translate(0%, 0%) rotate(180deg);
+        opacity: 0.8;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .welcome-content h1 {
+        font-size: clamp(1.6rem, 5vw, 2rem);
+        margin-bottom: 2rem;
+    }
+    
+    .welcome-button {
+        padding: 0.8rem 1.6rem;
+        font-size: 1rem;
+    }
+    
+    .welcome-button svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+.main-content {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 2s ease-in-out, visibility 0s linear 2s;
+}
+
+.main-content.fade-in {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 2s ease-in-out, visibility 0s linear;
+}
+
+/* Black overlay for transitions */
+.black-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease-in-out, visibility 0s linear 1s;
+}
+
+.black-overlay.fade-in {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 1s ease-in-out, visibility 0s linear;
+}
+
+#bgMusic {
+    position: fixed;
+    top: -9999px;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+/* Welcome content animations */
+@keyframes shrinkFadeOut {
+    0% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.8) translateY(20px);
+        opacity: 0;
+    }
+}
+
+.welcome-content.fade-out h1,
+.welcome-content.fade-out .welcome-button {
+    animation: shrinkFadeOut 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.welcome-content.fade-out .welcome-button {
+    animation-delay: 0.1s;
 } 

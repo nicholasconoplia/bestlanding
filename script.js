@@ -1,81 +1,124 @@
-// Audio Setup
-const bgMusic = document.getElementById('bgMusic');
-const audioControl = document.getElementById('audioControl');
-let fadeInterval;
-const fadeTime = 2000; // 2 seconds fade
-const fadeSteps = 20; // Number of steps in the fade
-let isPlaying = false;
+// Welcome Screen & Music Setup
+document.addEventListener('DOMContentLoaded', function() {
+    const welcomeOverlay = document.querySelector('.welcome-overlay');
+    const welcomeButton = document.querySelector('.welcome-button');
+    const blackOverlay = document.createElement('div');
+    blackOverlay.classList.add('black-overlay');
+    document.body.appendChild(blackOverlay);
 
-// Set initial volume
-bgMusic.volume = 0;
-
-// Function to fade audio
-function fadeAudio(start, end, duration) {
-    clearInterval(fadeInterval);
-    
-    const diff = end - start;
-    const steps = fadeSteps;
-    const stepValue = diff / steps;
-    const stepTime = duration / steps;
-    let current = start;
-    let step = 0;
-
-    fadeInterval = setInterval(() => {
-        step++;
-        current += stepValue;
-        bgMusic.volume = Math.min(Math.max(current, 0), 1);
-
-        if (step >= steps) {
-            clearInterval(fadeInterval);
-            bgMusic.volume = end;
-        }
-    }, stepTime);
-}
-
-// Handle audio looping with crossfade
-bgMusic.addEventListener('timeupdate', () => {
-    const buffer = 2; // Start fading 2 seconds before the end
-    if (bgMusic.currentTime > bgMusic.duration - buffer) {
-        fadeAudio(bgMusic.volume, 0, fadeTime);
+    // Wrap all content except welcome and black overlay in main-content div
+    const mainContent = document.createElement('div');
+    mainContent.classList.add('main-content');
+    while (document.body.children.length > 2) {
+        mainContent.appendChild(document.body.children[2]);
     }
-});
+    document.body.appendChild(mainContent);
 
-bgMusic.addEventListener('ended', () => {
-    bgMusic.currentTime = 0;
-    bgMusic.play();
-    fadeAudio(0, 0.5, fadeTime); // Fade in to 50% volume
-});
+    // Mouse movement handler
+    document.addEventListener('mousemove', (e) => {
+        if (welcomeOverlay) {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            welcomeOverlay.style.setProperty('--mouse-x', `${x}%`);
+            welcomeOverlay.style.setProperty('--mouse-y', `${y}%`);
+        }
+    });
 
-// Handle play button click
-audioControl.addEventListener('click', () => {
-    if (!isPlaying) {
-        // Start playing with fade in
-        bgMusic.play();
-        fadeAudio(0, 0.5, fadeTime); // Fade in to 50% volume
-        audioControl.classList.remove('muted');
-        isPlaying = true;
-    } else {
-        // Fade out and pause
-        fadeAudio(bgMusic.volume, 0, fadeTime);
+    let player;
+    let fadeInterval;
+    const FADE_DURATION = 2000; // 2 seconds fade
+    const VOLUME_TARGET = 30; // Target volume (0-100)
+    const FADE_STEP = 50; // How often to update volume (ms)
+
+    // Initialize YouTube API
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // YouTube API will call this function when ready
+    window.onYouTubeIframeAPIReady = function() {
+        player = new YT.Player('bgMusic', {
+            videoId: '9p5Tokd-93k', // Make sure this is set
+            playerVars: {
+                'autoplay': 0,
+                'controls': 0,
+                'disablekb': 1,
+                'loop': 1,
+                'playlist': '9p5Tokd-93k', // Required for looping
+                'modestbranding': 1,
+                'playsinline': 1,
+                'rel': 0,
+                'showinfo': 0,
+                'mute': 1 // Start muted
+            },
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    };
+
+    function onPlayerReady(event) {
+        // Start playing but muted
+        player.setVolume(0);
+        player.playVideo();
+    }
+
+    function onPlayerStateChange(event) {
+        if (event.data === YT.PlayerState.ENDED) {
+            player.playVideo();
+        }
+    }
+
+    function fadeInMusic() {
+        if (!player || typeof player.getVolume !== 'function') return;
+
+        // First unmute the player
+        player.unMute();
+        
+        let currentVolume = 0;
+        const steps = FADE_DURATION / FADE_STEP;
+        const volumeIncrement = VOLUME_TARGET / steps;
+
+        // Clear any existing fade interval
+        if (fadeInterval) clearInterval(fadeInterval);
+
+        fadeInterval = setInterval(() => {
+            currentVolume += volumeIncrement;
+            if (currentVolume >= VOLUME_TARGET) {
+                currentVolume = VOLUME_TARGET;
+                clearInterval(fadeInterval);
+            }
+            player.setVolume(Math.round(currentVolume));
+        }, FADE_STEP);
+    }
+
+    // Enter button click handler
+    welcomeButton.addEventListener('click', () => {
+        // Trigger content and glow fade out animations
+        welcomeOverlay.querySelector('.welcome-content').classList.add('fade-out');
+        welcomeOverlay.classList.add('fade-out');
+        
+        // Start fading in the music
+        fadeInMusic();
+        
+        // First fade to black after content animation
         setTimeout(() => {
-            bgMusic.pause();
-        }, fadeTime);
-        audioControl.classList.add('muted');
-        isPlaying = false;
-    }
-});
-
-// Handle page visibility change
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-        if (isPlaying) {
-            fadeAudio(bgMusic.volume, 0, fadeTime);
-        }
-    } else {
-        if (isPlaying) {
-            fadeAudio(0, 0.5, fadeTime);
-        }
-    }
+            blackOverlay.classList.add('fade-in');
+            
+            // After black fade completes, hide welcome screen and fade in content
+            setTimeout(() => {
+                welcomeOverlay.style.display = 'none';
+                mainContent.classList.add('fade-in');
+                
+                // Finally fade out black overlay
+                setTimeout(() => {
+                    blackOverlay.classList.remove('fade-in');
+                }, 1000);
+            }, 1000);
+        }, 800); // Wait for content fade animation to complete
+    });
 });
 
 // Register GSAP plugins
@@ -266,5 +309,15 @@ gsap.from('.footer-content > *', {
         trigger: '.footer',
         start: "top 90%",
         toggleActions: "play none none reverse"
+    }
+});
+
+// Page Load Animation
+document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.querySelector('.fade-in-overlay');
+    if (overlay) {
+        setTimeout(() => {
+            overlay.classList.add('fade-out');
+        }, 500);
     }
 }); 

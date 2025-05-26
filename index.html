@@ -9,22 +9,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 <body>
-    <!-- Background Music -->
-    <audio id="bgMusic" loop>
-        <source src="Elysium Ethereal Fantasy Ambient Music.wav" type="audio/wav">
-        Your browser does not support the audio element.
-    </audio>
+    <!-- Welcome Overlay -->
+    <div class="welcome-overlay">
+        <div class="particles-container"></div>
+        <div class="gradient-orb"></div>
+        <div class="welcome-content">
+            <div class="flicker-light"></div>
+            <h1>Welcome to the app that will save your student life</h1>
+            <button class="welcome-button">
+                <span>Enter</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </div>
+    </div>
 
-    <!-- Play Button -->
-    <button id="audioControl" class="audio-control" aria-label="Toggle Music">
-        <svg class="audio-icon-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M5 3l14 9-14 9V3z"/>
-        </svg>
-        <svg class="audio-icon-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-            <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>
-        </svg>
-    </button>
+    <!-- Background Music -->
+    <div id="bgMusic"></div>
 
     <!-- Page Load Fade-in Overlay -->
     <div class="fade-in-overlay"></div>
@@ -34,10 +36,12 @@
     
     <!-- Navigation -->
     <nav class="nav">
-        <div class="nav-logo">canvo</div>
+        <div class="nav-logo">
+            <img src="transparentlogo.png" alt="Canvo" class="nav-logo-img">
+        </div>
         <div class="nav-links">
-            <a href="#section1">How It Works</a>
             <a href="#section2">Features</a>
+            <a href="#section1">How It Works</a>
             <a href="#section3">Stories</a>
             <a href="#section5">FAQ</a>
             <a href="/token.html" target="_blank">Access Token</a>
@@ -53,8 +57,8 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="hero-text-container">
-            <h1 class="hero-title">canvo</h1>
-            <p class="hero-subtitle">Get everything done. So you can live your real life.</p>
+                <h1 class="hero-title">canvo</h1>
+                <p class="hero-subtitle">Get everything done. So you can live your real life.</p>
                 <a href="https://apps.apple.com/au/app/canvo/id6745335226" class="hero-cta">
                     <span class="hero-cta-text">Download Now</span>
                     <svg class="hero-cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -62,13 +66,6 @@
                     </svg>
                 </a>
             </div>
-        </div>
-    </section>
-
-    <!-- Motivation Section -->
-    <section class="motivation-section">
-        <div class="motivation-content">
-            <p class="motivation-text">Get your work done so you can train for that marathon, rank up to Gold III, take that trip, stay out till 4am without guilt, or just have a day with zero stress.</p>
         </div>
     </section>
 
@@ -88,6 +85,13 @@
         </div>
     </section>
 
+    <!-- Motivation Section -->
+    <section class="motivation-section">
+        <div class="motivation-content">
+            <p class="motivation-text">Get your work done so you can train for that marathon, rank up to Gold III, or just have a day with zero stress.</p>
+        </div>
+    </section>
+
     <!-- Features Section -->
     <section id="section2" class="section">
         <div class="section-content features-grid">
@@ -95,8 +99,11 @@
             <div class="feature-row">
                 <div class="feature-text">
                     <h3>Everything You Owe — In One Place</h3>
-                    <p>See all your upcoming tasks organized by priority, due date, and class — with headers and countdowns so you always know what's next.</p>
-                    <p>Get daily reminders for anything due this week — no more surprises. And forget manual entry: every assignment from Canvas due in the next 7 days is automatically added when you open the app.</p>
+                    <ul class="feature-list">
+                        <li>See all your upcoming tasks organized by priority, due date, and class — with headers and countdowns so you always know what's next</li>
+                        <li>Get daily reminders for anything due this week — no more surprises</li>
+                        <li>Every assignment from Canvas due in the next 7 days is automatically added when you open the app</li>
+                    </ul>
                 </div>
                 <div class="feature-image">
                     <img src="TasksTab.png" alt="Tasks Overview" class="feature-screenshot">
@@ -110,8 +117,11 @@
                 </div>
                 <div class="feature-text">
                     <h3>Your Whole Canvas, Simplified</h3>
-                    <p>Instantly view all your assignments and quizzes from Canvas in one clean layout. See due dates, submission status, and tap "View in Canvas" to jump straight to the source.</p>
-                    <p>No more endless scrolling through modules, inboxes, or links. Just what you need — right when you need it.</p>
+                    <ul class="feature-list">
+                        <li>Instantly view all your assignments and quizzes from Canvas in one clean layout</li>
+                        <li>See due dates, submission status, and tap "View in Canvas" to jump straight to the source</li>
+                        <li>No more endless scrolling through modules, inboxes, or links — just what you need, right when you need it</li>
+                    </ul>
                 </div>
             </div>
             
@@ -119,7 +129,10 @@
             <div class="feature-row">
                 <div class="feature-text">
                     <h3>When You Don't Know Where to Start</h3>
-                    <p>Tap "Spin the Wheel" and let Canvo choose your next move. Whether it's a 5-minute quiz or that big essay, this playful nudge helps you beat procrastination with one tap.</p>
+                    <ul class="feature-list">
+                        <li>Tap "Spin the Wheel" and let Canvo choose your next move</li>
+                        <li>Whether it's a 5-minute quiz or that big essay, this playful nudge helps you beat procrastination with one tap</li>
+                    </ul>
                 </div>
                 <div class="feature-image">
                     <img src="spinthewheel.png" alt="Spin the Wheel" class="feature-screenshot">
@@ -133,8 +146,11 @@
                 </div>
                 <div class="feature-text">
                     <h3>Your Schedule. Without the Stress</h3>
-                    <p>Add your deadlines. Block your busy hours. Canvo auto-builds a custom study plan into your free time — with smart notifications when it's time to get to work.</p>
-                    <p>Finish before the deadline. Get your life back sooner.</p>
+                    <ul class="feature-list">
+                        <li>Add your deadlines and block your busy hours</li>
+                        <li>Canvo auto-builds a custom study plan into your free time — with smart notifications when it's time to get to work</li>
+                        <li>Finish before the deadline and get your life back sooner</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -407,17 +423,16 @@
                 <div class="footer-links">
                     <div class="footer-column">
                         <h4 class="footer-heading">Product</h4>
-                        <a href="#section1" class="footer-link">How It Works</a>
                         <a href="#section2" class="footer-link">Features</a>
+                        <a href="#section1" class="footer-link">How It Works</a>
                         <a href="#section3" class="footer-link">Stories</a>
                         <a href="#section5" class="footer-link">FAQ</a>
                         <a href="/token.html" target="_blank" class="footer-link">Access Token</a>
                     </div>
                     <div class="footer-column">
                         <h4 class="footer-heading">Company</h4>
-                        <a href="#about" class="footer-link">About</a>
+                        <a href="about.html" class="footer-link">About</a>
                         <a href="support.html" class="footer-link">Support</a>
-                        <a href="#blog" class="footer-link">Blog</a>
                     </div>
                     <div class="footer-column">
                         <h4 class="footer-heading">Legal</h4>
@@ -437,5 +452,35 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Force autoplay on page load
+        window.addEventListener('load', function() {
+            // Try multiple approaches
+            function tryAutoplay() {
+                // Try audio element
+                var audio = document.getElementById('bgAudio');
+                audio.play().catch(function(error) {
+                    console.log("Audio autoplay failed, trying YouTube fallback");
+                });
+
+                // Try YouTube
+                var iframe = document.getElementById('bgMusic');
+                iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            }
+
+            // Try immediately
+            tryAutoplay();
+
+            // Also try on first user interaction
+            document.body.addEventListener('click', function() {
+                tryAutoplay();
+            }, { once: true });
+
+            // And on scroll
+            window.addEventListener('scroll', function() {
+                tryAutoplay();
+            }, { once: true });
+        });
+    </script>
 </body>
 </html> 

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Canvo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Music -->
+    <audio id="bgAudio" loop style="display:none">
+        <source src="https://docs.google.com/uc?export=download&id=1-SYKFtbhQ_OPw8GSoG16bqc4YR_Kk_Hs" type="audio/mp3">
+    </audio>
+    <iframe 
+        id="bgMusic"
+        style="display: none;"
+        src="https://www.youtube.com/embed/9p5Tokd-93k?enablejsapi=1&autoplay=1&mute=0&controls=0&loop=1&playlist=9p5Tokd-93k&playsinline=1&origin=https://canvo.app"
+        allow="autoplay; encrypted-media"
+        frameborder="0"
+    ></iframe>
+
+    <!-- Film Grain Overlay -->
+    <div class="film-grain"></div>
+
+    <!-- Back Navigation -->
+    <a href="/" class="back-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>Back to Home</span>
+    </a>
+
+    <div class="support-container">
+        <div class="support-content">
+            <h1 class="support-title">About</h1>
+            <div class="about-content">
+                <p>Hi, I'm the student who got tired of drowning in Canvas.</p>
+
+                <p>Before I built Canvo, I was stuck in the same spiral as every overwhelmed student: checking Canvas 10 times a day, screenshotting assignments, juggling sticky notes, Notion boards, and alarms — and still missing deadlines.</p>
+
+                <p>I thought there had to be something — something that just pulled everything I had to do into one clean to-do list, so I didn't have to hunt through modules and announcements and enter it all manually.</p>
+
+                <p>It's 2025. Everything already exists, right?</p>
+
+                <p>Nope. Not for me.</p>
+
+                <p>So I spent hours searching. And when I couldn't find it… I built it.</p>
+
+                <p>Canvo started during finals week — not because I had time, but because for once, I was finally ahead. I used my own early version to stay on track. It worked so well, I had enough breathing room to turn it into something real.</p>
+
+                <p>Now it's not just mine — it's yours.</p>
+
+                <p>Canvo is for every student who's ever felt like:</p>
+
+                <div class="about-quotes">
+                    <p>"I should be on top of things… but I'm always behind."</p>
+                    <p>"I'm working hard — but still forgetting stuff."</p>
+                    <p>"Everyone else looks organized, and I'm secretly drowning."</p>
+                </div>
+
+                <p>I built Canvo because I needed it. You get to use it because I refused to settle for feeling behind anymore.</p>
+
+                <p>This isn't some VC-backed startup. It's one student, building for others who get it. No logins. No tracking. Just a tool that thinks like we do — and actually helps.</p>
+
+                <p>You couldn't find this app before. But now, luckily for you — it exists.</p>
+
+                <p>Let's finally feel on top of things — for real this time.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Force autoplay on page load
+        window.addEventListener('load', function() {
+            // Try multiple approaches
+            function tryAutoplay() {
+                // Try audio element
+                var audio = document.getElementById('bgAudio');
+                audio.play().catch(function(error) {
+                    console.log("Audio autoplay failed, trying YouTube fallback");
+                });
+
+                // Try YouTube
+                var iframe = document.getElementById('bgMusic');
+                iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            }
+
+            // Try immediately
+            tryAutoplay();
+
+            // Also try on first user interaction
+            document.body.addEventListener('click', function() {
+                tryAutoplay();
+            }, { once: true });
+
+            // And on scroll
+            window.addEventListener('scroll', function() {
+                tryAutoplay();
+            }, { once: true });
+        });
+    </script>
+</body>
+</html> 
