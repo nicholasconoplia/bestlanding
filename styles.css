@@ -1341,4 +1341,75 @@ body {
         width: 18px;
         height: 18px;
     }
+}
+
+/* Motivation Section */
+.motivation-section {
+    padding: 120px 20px;
+    background: linear-gradient(180deg, 
+        rgba(0, 0, 0, 0) 0%,
+        rgba(255, 212, 120, 0.03) 50%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    position: relative;
+    overflow: hidden;
+}
+
+.motivation-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.motivation-text {
+    font-family: var(--font-subtitle);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    line-height: 1.6;
+    color: var(--text-offwhite);
+    opacity: 0.9;
+    font-style: italic;
+    letter-spacing: 0.02em;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    padding: 0 20px;
+}
+
+.motivation-text::before,
+.motivation-text::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.motivation-text::before {
+    top: -40px;
+}
+
+.motivation-text::after {
+    bottom: -40px;
+}
+
+@media (max-width: 768px) {
+    .motivation-section {
+        padding: 80px 20px;
+    }
+
+    .motivation-text {
+        font-size: 1.3rem;
+    }
+
+    .motivation-text::before,
+    .motivation-text::after {
+        width: 40px;
+    }
 } 
