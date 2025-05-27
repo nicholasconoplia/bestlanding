@@ -1,7 +1,25 @@
 // Welcome Screen & Music Setup
 document.addEventListener('DOMContentLoaded', function() {
+    // Only run welcome screen logic on the main page (index.html)
+    const isMainPage = window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname.endsWith('index.html');
+    
+    if (!isMainPage) {
+        // For subpages, just remove any overlays immediately
+        const fadeOverlay = document.querySelector('.fade-in-overlay');
+        if (fadeOverlay) {
+            fadeOverlay.classList.add('fade-out');
+        }
+        return; // Exit early for subpages
+    }
+
     const welcomeOverlay = document.querySelector('.welcome-overlay');
     const welcomeButton = document.querySelector('.welcome-button');
+    
+    // Only proceed if welcome elements exist (main page)
+    if (!welcomeOverlay || !welcomeButton) {
+        return;
+    }
+    
     const blackOverlay = document.createElement('div');
     blackOverlay.classList.add('black-overlay');
     document.body.appendChild(blackOverlay);
@@ -38,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // YouTube API will call this function when ready
     window.onYouTubeIframeAPIReady = function() {
-        player = new YT.Player('bgMusic', {
+        window.player = new YT.Player('bgMusic', {
             videoId: '9p5Tokd-93k', // Make sure this is set
             playerVars: {
                 'autoplay': 0,
@@ -61,21 +79,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function onPlayerReady(event) {
         // Start playing but muted
-        player.setVolume(0);
-        player.playVideo();
+        window.player.setVolume(0);
+        window.player.playVideo();
     }
 
     function onPlayerStateChange(event) {
         if (event.data === YT.PlayerState.ENDED) {
-            player.playVideo();
+            window.player.playVideo();
         }
     }
 
     function fadeInMusic() {
-        if (!player || typeof player.getVolume !== 'function') return;
+        if (!window.player || typeof window.player.getVolume !== 'function') return;
 
         // First unmute the player
-        player.unMute();
+        window.player.unMute();
         
         let currentVolume = 0;
         const steps = FADE_DURATION / FADE_STEP;
@@ -90,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 currentVolume = VOLUME_TARGET;
                 clearInterval(fadeInterval);
             }
-            player.setVolume(Math.round(currentVolume));
+            window.player.setVolume(Math.round(currentVolume));
         }, FADE_STEP);
     }
 
@@ -124,11 +142,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
 
-// Page load fade-in effect
+// Page load fade-in effect (for all pages)
 window.addEventListener('load', () => {
     // Small delay to ensure everything is ready
     setTimeout(() => {
-        document.querySelector('.fade-in-overlay').classList.add('fade-out');
+        const fadeOverlay = document.querySelector('.fade-in-overlay');
+        if (fadeOverlay) {
+            fadeOverlay.classList.add('fade-out');
+        }
     }, 100);
 });
 
@@ -353,4 +374,165 @@ document.addEventListener('DOMContentLoaded', function() {
             overlay.classList.add('fade-out');
         }, 500);
     }
+});
+
+// Video Player Controls
+document.addEventListener('DOMContentLoaded', function() {
+    // Only run video controls on pages that have the video player
+    const videoElement = document.getElementById('vimeoPlayer');
+    if (!videoElement) {
+        return; // Exit early if no video player exists
+    }
+    
+    const vimeoPlayer = new Vimeo.Player('vimeoPlayer');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const muteBtn = document.getElementById('muteBtn');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const timeline = document.getElementById('videoTimeline');
+    const timelineProgress = document.getElementById('timelineProgress');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const volumeProgress = document.getElementById('volumeProgress');
+    const currentTimeDisplay = document.getElementById('currentTime');
+    const durationDisplay = document.getElementById('duration');
+    const videoContainer = document.querySelector('.custom-video-container');
+    const videoClickOverlay = document.querySelector('.video-click-overlay');
+    const largePlayButton = document.querySelector('.large-play-button');
+
+    // Initialize
+    let volume = 0.7; // Set default volume to 70%
+    
+    // Set volume immediately when player is ready
+    vimeoPlayer.ready().then(() => {
+        vimeoPlayer.setVolume(volume);
+        updateVolumeProgress(volume);
+    });
+    
+    vimeoPlayer.getVolume().then(vol => {
+        // If video volume is too low, set it to a reasonable level
+        if (vol < 0.3) {
+            volume = 0.7;
+            vimeoPlayer.setVolume(volume);
+        } else {
+            volume = vol;
+        }
+        updateVolumeProgress(volume);
+    });
+
+    // Function to handle play state
+    function handlePlayState(isPlaying) {
+        if (isPlaying) {
+            videoContainer.classList.add('video-playing');
+            playPauseBtn.classList.add('playing');
+            // Pause background music when video starts
+            if (window.player && typeof window.player.pauseVideo === 'function') {
+                window.player.pauseVideo();
+            }
+        } else {
+            videoContainer.classList.remove('video-playing');
+            playPauseBtn.classList.remove('playing');
+            // Resume background music when video pauses
+            if (window.player && typeof window.player.playVideo === 'function') {
+                window.player.playVideo();
+            }
+        }
+    }
+
+    // Function to toggle play/pause
+    function togglePlay() {
+        vimeoPlayer.getPaused().then(paused => {
+            if (paused) {
+                // Ensure video has audible volume before playing
+                vimeoPlayer.getVolume().then(currentVolume => {
+                    if (currentVolume < 0.3) {
+                        vimeoPlayer.setVolume(volume);
+                        updateVolumeProgress(volume);
+                    }
+                    vimeoPlayer.play().then(() => {
+                        handlePlayState(true);
+                    });
+                });
+            } else {
+                vimeoPlayer.pause().then(() => {
+                    handlePlayState(false);
+                });
+            }
+        });
+    }
+
+    // Click handlers for play buttons and overlay
+    videoClickOverlay.addEventListener('click', togglePlay);
+    largePlayButton.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent double-firing with overlay
+        togglePlay();
+    });
+    playPauseBtn.addEventListener('click', togglePlay);
+
+    // Update play state on player events
+    vimeoPlayer.on('play', () => handlePlayState(true));
+    vimeoPlayer.on('pause', () => handlePlayState(false));
+    vimeoPlayer.on('ended', () => handlePlayState(false));
+
+    // Format time in MM:SS
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        seconds = Math.floor(seconds % 60);
+        return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    // Update timeline
+    vimeoPlayer.getDuration().then(duration => {
+        durationDisplay.textContent = formatTime(duration);
+    });
+
+    vimeoPlayer.on('timeupdate', function(data) {
+        currentTimeDisplay.textContent = formatTime(data.seconds);
+        const progress = (data.seconds / data.duration) * 100;
+        timelineProgress.style.width = `${progress}%`;
+    });
+
+    // Timeline seek
+    timeline.addEventListener('click', function(e) {
+        const rect = timeline.getBoundingClientRect();
+        const pos = (e.clientX - rect.left) / rect.width;
+        vimeoPlayer.getDuration().then(duration => {
+            vimeoPlayer.setCurrentTime(duration * pos);
+        });
+    });
+
+    // Volume control
+    volumeSlider.addEventListener('click', function(e) {
+        const rect = volumeSlider.getBoundingClientRect();
+        volume = (e.clientX - rect.left) / rect.width;
+        vimeoPlayer.setVolume(volume);
+        updateVolumeProgress(volume);
+    });
+
+    function updateVolumeProgress(value) {
+        volumeProgress.style.width = `${value * 100}%`;
+        if (value === 0) {
+            muteBtn.classList.add('muted');
+        } else {
+            muteBtn.classList.remove('muted');
+        }
+    }
+
+    // Mute/Unmute
+    muteBtn.addEventListener('click', function() {
+        vimeoPlayer.getVolume().then(currentVolume => {
+            if (currentVolume > 0) {
+                vimeoPlayer.setVolume(0);
+                updateVolumeProgress(0);
+            } else {
+                vimeoPlayer.setVolume(volume || 1);
+                updateVolumeProgress(volume || 1);
+            }
+        });
+    });
+
+    // Fullscreen
+    fullscreenBtn.addEventListener('click', function() {
+        vimeoPlayer.requestFullscreen();
+    });
+
+    // Play/pause button state is now handled in handlePlayState function
 }); 
