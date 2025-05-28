@@ -278,11 +278,113 @@ document.querySelectorAll('.feature-row').forEach((row, index) => {
 const testimonialsTrack = document.querySelector('.testimonials-track');
 const testimonialCards = document.querySelectorAll('.testimonial-card');
 
-// Clone the testimonials
-testimonialCards.forEach(card => {
-    const clone = card.cloneNode(true);
-    testimonialsTrack.appendChild(clone);
-});
+if (testimonialsTrack && testimonialCards.length > 0) {
+    // Clone the testimonials multiple times for seamless scrolling
+    const originalTestimonials = Array.from(testimonialCards);
+    
+    // Create enough copies for seamless infinite scroll
+    for (let i = 0; i < 3; i++) {
+        originalTestimonials.forEach(card => {
+            const clone = card.cloneNode(true);
+            testimonialsTrack.appendChild(clone);
+        });
+    }
+    
+    // Manual scroll functionality
+    const testimonialsContainer = document.querySelector('.testimonials-container');
+    let isScrolling = false;
+    let scrollTimeout;
+    let startX, startScrollLeft, isDragging = false;
+    
+    // Detect if device is mobile
+    const isMobile = window.innerWidth <= 768;
+    const scrollAmount = isMobile ? 200 : 300;
+    
+    // Mouse wheel scrolling
+    testimonialsContainer.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const deltaX = e.deltaY > 0 ? scrollAmount : -scrollAmount;
+        
+        // Pause auto-scroll temporarily
+        testimonialsTrack.classList.add('manual-scroll');
+        clearTimeout(scrollTimeout);
+        
+        // Smooth scroll
+        testimonialsContainer.scrollBy({
+            left: deltaX,
+            behavior: 'smooth'
+        });
+        
+        // Resume auto-scroll after user stops scrolling
+        scrollTimeout = setTimeout(() => {
+            testimonialsTrack.classList.remove('manual-scroll');
+        }, 3000);
+    });
+    
+    // Touch and mouse drag scrolling
+    testimonialsContainer.addEventListener('mousedown', startDrag);
+    testimonialsContainer.addEventListener('touchstart', startDrag, { passive: false });
+    
+    function startDrag(e) {
+        isDragging = true;
+        startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+        startScrollLeft = testimonialsContainer.scrollLeft;
+        
+        // Pause auto-scroll
+        testimonialsTrack.classList.add('manual-scroll');
+        
+        // Add event listeners for move and end
+        if (e.type === 'mousedown') {
+            document.addEventListener('mousemove', onDrag);
+            document.addEventListener('mouseup', endDrag);
+        } else {
+            document.addEventListener('touchmove', onDrag, { passive: false });
+            document.addEventListener('touchend', endDrag);
+        }
+    }
+    
+    function onDrag(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        
+        const currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+        const deltaX = currentX - startX;
+        
+        // Apply momentum-based scrolling for smoother feel
+        const scrollMultiplier = isMobile ? 1.2 : 1;
+        testimonialsContainer.scrollLeft = startScrollLeft - (deltaX * scrollMultiplier);
+    }
+    
+    function endDrag() {
+        isDragging = false;
+        
+        // Remove event listeners
+        document.removeEventListener('mousemove', onDrag);
+        document.removeEventListener('mouseup', endDrag);
+        document.removeEventListener('touchmove', onDrag);
+        document.removeEventListener('touchend', endDrag);
+        
+        // Resume auto-scroll after a delay
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            testimonialsTrack.classList.remove('manual-scroll');
+        }, isMobile ? 2000 : 3000); // Shorter delay on mobile
+    }
+    
+    // Handle infinite scroll reset
+    testimonialsContainer.addEventListener('scroll', () => {
+        const scrollLeft = testimonialsContainer.scrollLeft;
+        const scrollWidth = testimonialsContainer.scrollWidth;
+        const clientWidth = testimonialsContainer.clientWidth;
+        
+        // Reset scroll position for infinite scroll effect
+        if (scrollLeft >= (scrollWidth - clientWidth) / 2) {
+            testimonialsContainer.scrollLeft = scrollLeft - (scrollWidth - clientWidth) / 2;
+        } else if (scrollLeft <= 0) {
+            testimonialsContainer.scrollLeft = (scrollWidth - clientWidth) / 2;
+        }
+    });
+}
 
 // CTA section animations
 const ctaSection = document.querySelector('#section4');
@@ -535,4 +637,104 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Play/pause button state is now handled in handlePlayState function
+});
+
+// Mobile Menu Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileDropdown = document.querySelector('.mobile-dropdown');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    
+    if (mobileMenuBtn && mobileDropdown) {
+        // Toggle mobile menu
+        mobileMenuBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            mobileMenuBtn.classList.toggle('active');
+            mobileDropdown.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on a link
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenuBtn.classList.remove('active');
+                mobileDropdown.classList.remove('active');
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileDropdown.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                mobileMenuBtn.classList.remove('active');
+                mobileDropdown.classList.remove('active');
+            }
+        });
+        
+        // Close menu on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                mobileMenuBtn.classList.remove('active');
+                mobileDropdown.classList.remove('active');
+            }
+        });
+    }
+});
+
+// Audio Control for Background Music
+document.addEventListener('DOMContentLoaded', function() {
+    const audioControl = document.getElementById('audioControl');
+    
+    if (audioControl) {
+        let isMusicMuted = false;
+        
+        audioControl.addEventListener('click', function() {
+            if (window.player && typeof window.player.isMuted === 'function') {
+                if (isMusicMuted) {
+                    // Unmute the music
+                    window.player.unMute();
+                    audioControl.classList.remove('muted');
+                    isMusicMuted = false;
+                } else {
+                    // Mute the music
+                    window.player.mute();
+                    audioControl.classList.add('muted');
+                    isMusicMuted = true;
+                }
+            }
+        });
+        
+        // Update button state when player is ready
+        if (window.player) {
+            window.player.isMuted().then(muted => {
+                if (muted) {
+                    audioControl.classList.add('muted');
+                    isMusicMuted = true;
+                } else {
+                    audioControl.classList.remove('muted');
+                    isMusicMuted = false;
+                }
+            });
+        }
+        
+        // Listen for player state changes if available
+        if (window.onYouTubeIframeAPIReady) {
+            const originalReady = window.onYouTubeIframeAPIReady;
+            window.onYouTubeIframeAPIReady = function() {
+                originalReady();
+                // Update button state once player is initialized
+                setTimeout(() => {
+                    if (window.player && typeof window.player.isMuted === 'function') {
+                        window.player.isMuted().then(muted => {
+                            if (muted) {
+                                audioControl.classList.add('muted');
+                                isMusicMuted = true;
+                            } else {
+                                audioControl.classList.remove('muted');
+                                isMusicMuted = false;
+                            }
+                        });
+                    }
+                }, 1000);
+            };
+        }
+    }
 }); 

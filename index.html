@@ -15,7 +15,7 @@
         <div class="gradient-orb"></div>
         <div class="welcome-content">
             <div class="flicker-light"></div>
-            <h1>Welcome to the app that will save your student life</h1>
+            <h1>Welcome to Canvo — Get Organized. Live More.</h1>
             <button class="welcome-button">
                 <span>Enter</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -55,6 +55,20 @@
             <a href="#section3">Stories</a>
             <a href="#section5">FAQ</a>
             <a href="/token.html" target="_blank">Access Token</a>
+        </div>
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" aria-label="Toggle menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        <!-- Mobile Dropdown Menu -->
+        <div class="mobile-dropdown">
+            <a href="#section2" class="mobile-nav-link">Features</a>
+            <a href="#section1" class="mobile-nav-link">How It Works</a>
+            <a href="#section3" class="mobile-nav-link">Stories</a>
+            <a href="#section5" class="mobile-nav-link">FAQ</a>
+            <a href="/token.html" target="_blank" class="mobile-nav-link">Access Token</a>
         </div>
     </nav>
 
@@ -502,6 +516,21 @@
     </footer>
 
     <script src="script.js"></script>
+    
+    <!-- Audio Control Button -->
+    <button class="audio-control" id="audioControl" aria-label="Toggle background music">
+        <svg class="audio-icon-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+        </svg>
+        <svg class="audio-icon-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <line x1="23" y1="9" x2="17" y2="15"/>
+            <line x1="17" y1="9" x2="23" y2="15"/>
+        </svg>
+    </button>
+
     <script>
         // Force autoplay on page load
         window.addEventListener('load', function() {
