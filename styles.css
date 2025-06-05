@@ -1320,7 +1320,7 @@ body {
 }
 
 .cta-description {
-    font-family: var(--font-subtitle);
+    font-family: var(--font-subtitle)
     font-size: 1.25rem;
     color: var(--text-offwhite);
     opacity: 0.85;

@@ -5,3 +5,7 @@ node_modules/
 .vscode/
 .idea/ 
 .vercel
+dist/
+
+# Keep analytics.js in root
+!analytics.js

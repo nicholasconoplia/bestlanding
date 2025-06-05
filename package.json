@@ -4,12 +4,17 @@
   "description": "A stunning, immersive website for a student productivity app that captures the essence of **\"Get Things Done, Live Your Moments\"**. Built with cinematic storytelling, golden-hour aesthetics, and scroll-based animations.",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:analytics": "vite build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@vercel/analytics": "^1.5.0",
     "canvas-scroll-clip": "^1.3.2"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
   }
 }
